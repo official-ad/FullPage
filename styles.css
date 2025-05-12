@@ -1,0 +1,425 @@
+/* Ultimate Mobile-First Stylesheet: styles.css */
+
+/* 1. Imports & Variables */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap');
+
+:root {
+  /* Color Palette: azules y celestes */
+  --bg-dark: #3c0403;          /* azul muy oscuro */
+  --bg-light: #642012;         /* azul medio */
+  --accent-mid: #a94d07;       /* azul claro */
+  --accent-light: #ffe066;     /* celeste brillante */
+  --white: #e0f7ff;            /* blanco con tinte celeste */
+  --input-bg: rgba(0, 0, 0, 0.2);
+
+  /* Phone Dimensions */
+  --phone-aspect: 360/780;
+  --phone-width: 360px;
+  --phone-height: calc(var(--phone-width) / var(--phone-aspect));
+
+  /* Spacing & Shapes */
+  --gutter: 1rem;
+  --radius: 1rem;
+
+  /* Timing */
+  --ease: cubic-bezier(0.4,0,0.2,1);
+  --fast: 0.1s;
+  --medium: 0.5s;
+}
+
+/* 2. Reset & Base */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  font-family: 'Montserrat', sans-serif;
+  background: var(--bg-dark) center/cover no-repeat;
+  height: 100%;
+}
+body {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--white);
+}
+
+/* 3. Preloader */
+#preloader {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-dark);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+/* 4. Theme Toggle */
+.theme-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(0,0,0,0.2);
+  border: none;
+  color: var(--white);
+  padding: 0.5rem;
+  border-radius: 50%;
+  font-size: 1.25rem;
+  z-index: 1000;
+  transition: background var(--fast) var(--ease);
+}
+.theme-toggle:hover {
+  background: rgba(0,0,0,0.3);
+}
+
+/* 5. Phone Mockup & Screen */
+.phone-container {
+  position: relative;
+  width: min(100%, var(--phone-width));
+  aspect-ratio: var(--phone-aspect);
+}
+.phone-mockup {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+.screen {
+  position: absolute;
+  top: 6.5%;
+  left: 5%;
+  width: 90%;
+  height: 87%;
+  background: var(--bg-light);
+  border-radius: var(--radius);
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--gutter);
+}
+
+/* 6. Card with gradient background */
+.card {
+  width: 100%;
+  background: linear-gradient(180deg, rgba(60, 14, 0, 0.9) 0%, rgba(67, 19, 5, 0.8) 100%);
+  backdrop-filter: blur(8px);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: calc(var(--gutter)*1.5);
+  gap: 0.75rem;
+}
+
+/* 7. Title & highlights */
+.emoji {
+  font-size: 2.5rem;
+  animation: bounce 2.5s infinite var(--ease);
+  /* añadido: sombra para el emoji */
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+}
+@keyframes bounce {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-8px); }
+}
+.title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--accent-light);
+  text-shadow:
+    2px 2px 4px rgba(0,0,0,0.7),
+    0 0 8px var(--accent-mid);
+  text-align: center;
+}
+.subtitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  /* añadido: más sombra al texto */
+  text-shadow: 1px 1px 6px rgba(0,0,0,0.7);
+}
+:root {
+  /* Parámetros ajustables */
+  --fire-duration: 3s;
+  --fire-ease: ease-in-out;
+  --fire-color-base: #ff7a00;
+  --fire-color-mid: #ff9c33;
+  --fire-color-tip: #ffd966;
+  --fire-scale-min: 1.2;   /* escala base */
+  --fire-scale-max: 1.15;  /* crecimiento máximo */
+  --fire-rise: 8px;        /* ascenso máximo */
+}
+
+.subtitle .fire {
+  display: inline-block;
+  transform: scale(var(--fire-scale-min));
+  color: var(--fire-color-base);
+  animation:
+    fire-color    var(--fire-duration) infinite var(--fire-ease),
+    fire-pulse    var(--fire-duration) infinite var(--fire-ease),
+    fire-rise     var(--fire-duration) infinite var(--fire-ease);
+}
+
+@keyframes fire-color {
+  0%, 100% {
+    color: var(--fire-color-base);
+    text-shadow: 0 0 2px var(--fire-color-base);
+  }
+  50% {
+    color: var(--fire-color-mid);
+    text-shadow: 0 0 4px var(--fire-color-mid);
+  }
+  75% {
+    color: var(--fire-color-tip);
+    text-shadow: 0 0 6px var(--fire-color-tip);
+  }
+}
+
+@keyframes fire-pulse {
+  0%, 100% {
+    transform: scale(var(--fire-scale-min));
+  }
+  50% {
+    transform: scale(var(--fire-scale-max));
+  }
+}
+
+@keyframes fire-rise {
+  0%, 100% {
+    transform: translateY(0) scale(var(--fire-scale-min));
+  }
+  50% {
+    transform: translateY(calc(-1 * var(--fire-rise))) scale(var(--fire-scale-max));
+  }
+}
+
+}
+@keyframes flicker {
+  0%,20%,22%,63%,65%,100% { opacity: 1; }
+  21%,64%               { opacity: 0.4; }
+}
+.highlight {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--accent-light);
+  /* añadido: resalte con sombra */
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+  margin-top: 0.5rem;
+}
+
+/* 8. Input & Button */
+.input-group { width: 100%; }
+input[type="text"] {
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  border-radius: calc(var(--radius)/2);
+  background: var(--input-bg);
+  color: var(--white);
+  font-size: 1rem;
+  transition: box-shadow var(--medium) var(--ease),
+              transform var(--fast) var(--ease);
+}
+input[type="text"]:focus {
+  outline: none;
+  box-shadow: 0 0 12px var(--accent-mid);
+  transform: translateY(-2px);
+}
+.shake {
+  animation: shake 0.5s var(--ease);
+}
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  20%,60% { transform: translateX(-6px); }
+  40%,80% { transform: translateX(6px); }
+}
+.btn {
+  width: 100%;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: var(--white);
+  border: none;
+  border-radius: calc(var(--radius)/2);
+  background: linear-gradient(90deg, var(--accent-mid), var(--accent-light));
+  background-size: 200% 200%;
+  animation: gradient 4s var(--ease) infinite;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  transition: transform var(--fast) var(--ease);
+}
+@keyframes gradient {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.btn:hover {
+  transform: scale(1.03) translateY(-1px);
+}
+.btn .icon {
+  margin-left: 0.5rem;
+  width: 1.25em;
+  height: 1.25em;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+/* 9. Cubo 3D */
+:root {
+  --cube-size: 200px;
+  --cube-depth: 100px;
+  --cube-duration: 6s;
+  --cube-shadow-blur: 10px;
+  --cube-shadow-color: rgba(0,0,0,0.2);
+}
+
+/* Contenedor de la escena */
+.scene {
+  position: relative;
+  width: var(--cube-size);
+  height: var(--cube-size);
+  margin: auto;
+}
+
+/* Sombra dinámica bajo el cubo */
+.shadow {
+  position: absolute;
+  width: var(--cube-size);
+  height: calc(var(--cube-size) / 5);
+  background: var(--cube-shadow-color);
+  border-radius: 50%;
+  bottom: -10px;
+  left: 0;
+  filter: blur(var(--cube-shadow-blur));
+  transform-origin: center;
+  animation: shadowAnim var(--cube-duration) infinite;
+}
+@keyframes shadowAnim {
+  0%,100% { transform: scale(1); opacity: 0.5; }
+  25%     { transform: scale(0.8); opacity: 0.4; }
+  50%     { transform: scale(0.6); opacity: 0.3; }
+  75%     { transform: scale(0.8); opacity: 0.4; }
+}
+
+/* Cubo y rotación automática */
+.container {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  animation: rotate3d var(--cube-duration) infinite linear;
+}
+@keyframes rotate3d {
+  0%   { transform: rotateX(0deg)   rotateY(0deg); }
+  25%  { transform: rotateX(90deg)  rotateY(90deg); }
+  50%  { transform: rotateX(180deg) rotateY(180deg); }
+  75%  { transform: rotateX(270deg) rotateY(270deg); }
+  100% { transform: rotateX(360deg) rotateY(360deg); }
+}
+
+/* Caras del cubo */
+.face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 1rem;
+  background: var(--bg-light) center/cover no-repeat;
+  border: 2px solid var(--accent-mid);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+}
+.front  { transform: translateZ(var(--cube-depth)); }
+.back   { transform: translateZ(calc(-1*var(--cube-depth))) rotateY(180deg); }
+.right  { transform: translateX(var(--cube-depth)) rotateY(90deg); }
+.left   { transform: translateX(calc(-1*var(--cube-depth))) rotateY(-90deg); }
+.top    { transform: translateY(calc(-1*var(--cube-depth))) rotateX(90deg); }
+.bottom { transform: translateY(var(--cube-depth)) rotateX(-90deg); }
+
+/* Ajuste móvil */
+@media (max-width: 768px) {
+  :root {
+    --cube-size: 150px;
+    --cube-depth: 75px;
+  }
+}
+
+/* 10. Testimonials */
+.testimonials-section {
+  background: rgba(72, 17, 0, 0.85);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  margin-top: var(--gutter);
+}
+.testimonials-section h2 {
+  color: var(--accent-light);
+  font-size: 1.1rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+/* ajustado para mostrar todos los ítems desde JS */
+.testimonials-carousel {
+  position: relative;
+  height: auto;
+  overflow: visible;
+}
+.testimonial-item {
+  position: absolute;
+  width: 100%;
+  top: 100%;
+  left: 0;
+  opacity: 0;
+  transform: translateY(20px);
+  background: rgba(224,247,255,0.05);
+  padding: 1rem;
+  border-radius: calc(var(--radius)/2);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  transition: opacity var(--fast) var(--ease),
+              transform var(--fast) var(--ease),
+              top var(--fast) var(--ease);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  color: var(--white);
+}
+.testimonial-item.active {
+  top: 0;
+  opacity: 1;
+  transform: translateY(0);
+}
+.testimonial-item .meta {
+  font-size: 0.75rem;
+  color: rgba(224,247,255,0.7);
+}
+
+/* 11. Responsive & Accessibility */
+@media(max-width:600px) {
+  .phone-container, .theme-toggle {
+    display: none;
+  }
+  body {
+    overflow: auto;
+  }
+}
+@media(prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* 12. Light theme override */
+
+/* 12. Ocultar el text*/
+.content {
+  display: none !important;
+}

@@ -203,9 +203,6 @@ input[type="text"]:focus {
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
 }
 
-/*------------------------------------
-7. Sequence Fade-Through + Grid Final
-------------------------------------*/
 /* --------------------------------------------------
    Sequence Track & Items
 -------------------------------------------------- */
@@ -214,6 +211,7 @@ input[type="text"]:focus {
   width: 100%;
   height: auto;
   overflow: hidden;
+  display: block;
 }
 
 .sequence-item {
@@ -224,9 +222,8 @@ input[type="text"]:focus {
   transform: translateY(var(--start-offset, 20px)) scale(0.8);
   will-change: transform, opacity;
   border-radius: var(--radius, 8px);
-  /* Entry and continuous animations */
   animation:
-    slideFadeIn var(--fast, 0.5s) var(--ease, ease-out) forwards var(--delay-step, 0.08s) calc(var(--i, 0) * var(--delay-step, 0.08s)),
+    slideFadeIn var(--fast, 0.5s) var(--ease, ease-out) forwards calc(var(--i, 0) * var(--delay-step, 0.08s)),
     float var(--float-duration, 3s) var(--float-ease, ease-in-out) infinite both calc(var(--i, 0) * var(--delay-step, 0.08s));
 }
 
@@ -246,9 +243,6 @@ input[type="text"]:focus {
 .sequence-item:nth-child(13) { --i: 12; }
 .sequence-item:nth-child(14) { --i: 13; }
 
-/* --------------------------------------------------
-   Animations
--------------------------------------------------- */
 @keyframes slideFadeIn {
   from {
     opacity: 0;
@@ -269,20 +263,12 @@ input[type="text"]:focus {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .sequence-item {
-    animation: none;
-    transform: none;
-    opacity: 1;
-  }
-}
-
 /* --------------------------------------------------
    Final Grid Layout
 -------------------------------------------------- */
 #final-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
   gap: var(--gap, 0.5rem);
   opacity: 0;
   transform: scale(0.9);
@@ -315,6 +301,53 @@ input[type="text"]:focus {
   opacity: 1;
   transform: scale(1);
 }
+
+/* --------------------------------------------------
+   Mobile Optimizations
+-------------------------------------------------- */
+@media (max-width: 600px) {
+  /* Convert to horizontal carousel and fixed thumbnail size */
+  .sequence-track {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+  .sequence-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sequence-item {
+    position: static;
+    transform: none;
+    opacity: 1;
+    animation: none;
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    width: auto;
+  }
+
+  .sequence-item img,
+  #final-grid .grid-item img {
+    width: 60px;
+    height: auto;
+    border-radius: inherit;
+  }
+
+  #final-grid {
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: var(--gap-mobile, 0.25rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sequence-item {
+    animation: none;
+    transform: none;
+    opacity: 1;
+  }
+}
+
 
 /*------------------------------------
 8. Testimonials header

@@ -46,7 +46,7 @@
   </div>
 
   <!-- Theme Toggle -->
-  <button id="themeToggle" class="theme-toggle">🌙</button>
+  <button id="themeToggle" aria-label="Cambiar tema" class="theme-toggle">🌙</button>
 
   <!-- Screen ÚNICA -->
   <div class="screen">
@@ -55,14 +55,13 @@
       <div class="logo">
         <img src="images/logo.png" alt="Logo de Wonbet.vip" />
       </div>
-      <h1 class="title">200% EXTRA</h1>
-      <h1 class="title">EN TU CARGA</h1>
+      <h1 class="title">200% EXTRA EN TU CARGA</h1>
       <p class="subtitle">
         <span class="fire">🔥</span>
         ESCRIBÍ TU NOMBRE Y CREA TU USUARIO
         <span class="fire">🔥</span>
       </p>
-      <p class="highlight">SIN LIMITE DE RETIRO</p>
+      <p class="highlight">RETIROS ILIMITADOS</p>
       <div class="input-group">
         <input
           type="text"
@@ -77,32 +76,54 @@
       </a>
     </div>
 
+    <!-- Carousel Section -->
+    <section class="carousel-section">
+      <h2>POPULARES</h2>
+
+      <!-- Sequence Container -->
+      <ul id="sequence" class="sequence-track">
+        <li class="sequence-item" data-index="1"><img src="images/slide1.jpg" alt="Slide 1" loading="lazy"/></li>
+        <li class="sequence-item" data-index="2"><img src="images/slide2.jpg" alt="Slide 2" loading="lazy"/></li>
+        <li class="sequence-item" data-index="3"><img src="images/slide3.jpg" alt="Slide 3" loading="lazy"/></li>
+        <li class="sequence-item" data-index="4"><img src="images/slide4.jpg" alt="Slide 4" loading="lazy"/></li>
+        <li class="sequence-item" data-index="5"><img src="images/slide5.jpg" alt="Slide 5" loading="lazy"/></li>
+        <li class="sequence-item" data-index="6"><img src="images/slide6.jpg" alt="Slide 6" loading="lazy"/></li>
+        <li class="sequence-item" data-index="7"><img src="images/slide7.jpg" alt="Slide 7" loading="lazy"/></li>
+        <li class="sequence-item" data-index="8"><img src="images/slide8.jpg" alt="Slide 8" loading="lazy"/></li>
+        <li class="sequence-item" data-index="9"><img src="images/slide9.jpg" alt="Slide 9" loading="lazy"/></li>
+        <li class="sequence-item" data-index="10"><img src="images/slide10.jpg" alt="Slide 10" loading="lazy"/></li>
+        <li class="sequence-item" data-index="11"><img src="images/slide11.jpg" alt="Slide 11" loading="lazy"/></li>
+        <li class="sequence-item" data-index="12"><img src="images/slide12.jpg" alt="Slide 12" loading="lazy"/></li>
+        <li class="sequence-item" data-index="13"><img src="images/slide13.jpg" alt="Slide 13" loading="lazy"/></li>
+        <li class="sequence-item" data-index="14"><img src="images/slide14.jpg" alt="Slide 14" loading="lazy"/></li>
+      </ul>
+
+      <!-- Grid Container (oculto inicialmente) -->
+      <div id="final-grid" class="grid-container" aria-hidden="true">
+        <div class="grid-item"><img src="images/slide1.jpg" alt="Slide 1" loading="lazy"/></div>
+        <div class="grid-item"><img src="images/slide2.jpg" alt="Slide 2" loading="lazy"/></div>
+        <div class="grid-item"><img src="images/slide3.jpg" alt="Slide 3" loading="lazy"/></div>
+        <div class="grid-item"><img src="images/slide4.jpg" alt="Slide 4" loading="lazy"/></div>
+        <div class="grid-item"><img src="images/slide5.jpg" alt="Slide 5" loading="lazy"/></div>
+        <div class="grid-item"><img src="images/slide6.jpg" alt="Slide 6" loading="lazy"/></div>
+        <div class="grid-item"><img src="images/slide7.jpg" alt="Slide 7" loading="lazy"/></div>
+        <div class="grid-item"><img src="images/slide8.jpg" alt="Slide 8" loading="lazy"/></div>
+        <div class="grid-item"><img src="images/slide9.jpg" alt="Slide 9" loading="lazy"/></div>
+        <div class="grid-item"><img src="images/slide10.jpg" alt="Slide 10" loading="lazy"/></div>
+        <div class="grid-item"><img src="images/slide11.jpg" alt="Slide 11" loading="lazy"/></div>
+        <div class="grid-item"><img src="images/slide12.jpg" alt="Slide 12" loading="lazy"/></div>
+        <div class="grid-item"><img src="images/slide13.jpg" alt="Slide 13" loading="lazy"/></div>
+        <div class="grid-item"><img src="images/slide14.jpg" alt="Slide 14" loading="lazy"/></div>
+      </div>
+    </section>
+
     <!-- Testimonials Section -->
     <section class="testimonials-section">
-      <h2>FEEDBACK</h2>
+      <h2>LO QUE DICEN NUESTROS USUARIOS</h2>
       <div class="testimonials-carousel" id="testimonialsCarousel">
         <!-- testimonials-carousel.js inyecta los items aquí -->
       </div>
     </section>
-<!-- antes: <div class="scene">…</div> -->
-<div class="scene-wrapper">
-  <div class="scene">
-    <!-- shadow + container + faces -->
-  </div>
-</div>
-
-    <!-- Cubo 3D (las caras tomarán las imágenes) -->
-    <div class="scene">
-      <div class="shadow"></div>
-      <div class="container">
-        <div class="face front"><img src="" alt="Front face" /></div>
-        <div class="face back"><img src="" alt="Back face" /></div>
-        <div class="face right"><img src="" alt="Right face" /></div>
-        <div class="face left"><img src="" alt="Left face" /></div>
-        <div class="face top"><img src="" alt="Top face" /></div>
-        <div class="face bottom"><img src="" alt="Bottom face" /></div>
-      </div>
-    </div>
   </div>
 
   <!-- Fallback Mobile Content -->
@@ -113,7 +134,7 @@
     </section>
   </main>
 
-  <!-- Funciones: Preloader, Theme Toggle, CTA Button, y payload/API/WhatsApp -->
+  <!-- Funciones para Meta Pixel + captura de cookies + envío al API -->
   <script>
     const API_URL = 'https://jxfyydlcu7.execute-api.us-east-2.amazonaws.com/prod/Capture_fbc';
     const whatsappNumbers = [
@@ -157,17 +178,40 @@
     }
 
     // Preloader
-    window.addEventListener('load', () => {
+    window.addEventListener('load', ()=> {
       const pre = document.getElementById('preloader');
       pre.style.opacity = 0;
-      setTimeout(() => pre.remove(), 600);
+      setTimeout(()=> pre.remove(), 600);
     });
 
     // Theme Toggle
     const toggle = document.getElementById('themeToggle');
-    toggle.addEventListener('click', () => {
+    toggle.addEventListener('click', ()=> {
       document.documentElement.classList.toggle('light');
       toggle.textContent = document.documentElement.classList.contains('light') ? '🌞' : '🌙';
+    });
+
+    // Lazy-load images
+    const lazyImgs = [];
+    document.querySelectorAll('.lazy').forEach(img => lazyImgs.push(img));
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const img = e.target;
+          img.src = img.dataset.src;
+          img.onload = () => img.previousElementSibling.remove();
+          obs.unobserve(img);
+        }
+      });
+    }, { rootMargin: '50px' });
+    lazyImgs.forEach(img => obs.observe(img));
+
+    // Sequence-to-Grid Animation Trigger
+    window.addEventListener('DOMContentLoaded', () => {
+      const section = document.querySelector('.carousel-section');
+      setTimeout(() => {
+        section.classList.add('show-grid');
+      }, 14 * 80); // 14 items * 80ms delay
     });
 
     // CTA Button: envío al API y redirección a WhatsApp
@@ -177,13 +221,15 @@
       if (!name) {
         const inp = document.getElementById('username');
         inp.classList.add('shake');
-        setTimeout(() => inp.classList.remove('shake'), 500);
+        setTimeout(()=> inp.classList.remove('shake'), 500);
         return;
       }
 
       const id = generateUUID();
       const textoCompleto = `${mensajeBase} Mi código promocional es: ${id}%0AEste es mi nombre: ${encodeURIComponent(name)}`;
+
       await Promise.all([ waitForCookie('_fbc'), waitForCookie('_fbp') ]);
+
       const cookies = parseCookies();
       const payload = {
         event:     'ViewContent',
@@ -196,36 +242,12 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
-      }).catch(() => {}).finally(() => {
+      }).catch(()=>{}).finally(() => {
         const num = whatsappNumbers[Math.floor(Math.random() * whatsappNumbers.length)];
         window.location.href = `https://wa.me/${num}?text=${textoCompleto}`;
       });
     });
   </script>
-
-  <!-- Script para rotar las 14 imágenes en las 6 caras -->
-  <script>
-    const slideImages = [
-      'images/slide1.jpg','images/slide2.jpg','images/slide3.jpg','images/slide4.jpg',
-      'images/slide5.jpg','images/slide6.jpg','images/slide7.jpg','images/slide8.jpg',
-      'images/slide9.jpg','images/slide10.jpg','images/slide11.jpg','images/slide12.jpg',
-      'images/slide13.jpg','images/slide14.jpg'
-    ];
-    const faceImgs = Array.from(document.querySelectorAll('.scene .face img'));
-    let startIndex = 0;
-
-    function rotateCubeFaces() {
-      faceImgs.forEach((imgEl, i) => {
-        imgEl.src = slideImages[(startIndex + i) % slideImages.length];
-      });
-      startIndex = (startIndex + 1) % slideImages.length;
-    }
-
-    rotateCubeFaces();
-    setInterval(rotateCubeFaces, 3000);
-  </script>
-
-  <!-- Testimonials carousel JS -->
   <script src="testimonials-carousel.js"></script>
 </body>
 </html>

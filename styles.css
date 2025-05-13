@@ -1,225 +1,151 @@
-/* Ultimate Mobile-First Stylesheet: styles.css */
+/* File: styles.css */
 
-/* 1. Imports & Variables */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap');
 
+/*------------------------------------
+1. Variables
+------------------------------------*/
 :root {
-  /* Color Palette: azules y celestes */
-  --bg-dark: #3c0403;          /* azul muy oscuro */
-  --bg-light: #642012;         /* azul medio */
-  --accent-mid: #a94d07;       /* azul claro */
-  --accent-light: #ffe066;     /* celeste brillante */
-  --white: #e0f7ff;            /* blanco con tinte celeste */
-  --input-bg: rgba(0, 0, 0, 0.2);
+  --bg-dark: #001e3c;
+  --bg-light: #003a6b;
+  --accent-mid: #3399ff;
+  --accent-light: #66d9ff;
+  --white: #e0f7ff;
+  --input-bg: rgba(224,247,255,0.2);
 
-  /* Phone Dimensions */
-  --phone-aspect: 360/780;
-  --phone-width: 360px;
-  --phone-height: calc(var(--phone-width) / var(--phone-aspect));
-
-  /* Spacing & Shapes */
   --gutter: 1rem;
   --radius: 1rem;
 
-  /* Timing */
-  --ease: cubic-bezier(0.4,0,0.2,1);
-  --fast: 0.1s;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --fast: 0.2s;
   --medium: 0.5s;
+
+  --screen-aspect: 360/780;
 }
 
-/* 2. Reset & Base */
+/*------------------------------------
+2. Impedir scroll de la página
+------------------------------------*/
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;    /* quita scroll */
+}
+
+/*------------------------------------
+3. Base & Reset
+------------------------------------*/
 *, *::before, *::after {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
-html {
+
+body {
   font-family: 'Montserrat', sans-serif;
   background: var(--bg-dark) center/cover no-repeat;
-  height: 100%;
+  color: var(--white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-body {
-  height: 100vh;
+
+/* Ocultar contenido fallback */
+.content {
+  display: none !important;
+}
+
+/*------------------------------------
+4. Pantalla fija full-viewport
+------------------------------------*/
+.screen {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-light);
+  padding: var(--gutter);
   overflow: hidden;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--white);
-}
-
-/* 3. Preloader */
-#preloader {
-  position: fixed;
-  inset: 0;
-  background: var(--bg-dark);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
-
-/* 4. Theme Toggle */
-.theme-toggle {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  background: rgba(0,0,0,0.2);
-  border: none;
-  color: var(--white);
-  padding: 0.5rem;
-  border-radius: 50%;
-  font-size: 1.25rem;
-  z-index: 1000;
-  transition: background var(--fast) var(--ease);
-}
-.theme-toggle:hover {
-  background: rgba(0,0,0,0.3);
-}
-
-/* 5. Phone Mockup & Screen */
-.phone-container {
-  position: relative;
-  width: min(100%, var(--phone-width));
-  aspect-ratio: var(--phone-aspect);
-}
-.phone-mockup {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  pointer-events: none;
-}
-.screen {
-  position: absolute;
-  top: 6.5%;
-  left: 5%;
-  width: 90%;
-  height: 87%;
-  background: var(--bg-light);
-  border-radius: var(--radius);
-  overflow: visible;
-  display: flex;
   flex-direction: column;
   align-items: center;
-  padding: var(--gutter);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
 }
 
-/* 6. Card with gradient background */
+/*------------------------------------
+5. Card & Textos
+------------------------------------*/
 .card {
   width: 100%;
-  background: linear-gradient(180deg, rgba(60, 14, 0, 0.9) 0%, rgba(67, 19, 5, 0.8) 100%);
+  background: linear-gradient(180deg, rgba(0,30,60,0.9), rgba(0,58,107,0.8));
   backdrop-filter: blur(8px);
   border-radius: var(--radius);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: calc(var(--gutter)*1.5);
   gap: 0.75rem;
 }
 
-/* 7. Title & highlights */
 .emoji {
   font-size: 2.5rem;
   animation: bounce 2.5s infinite var(--ease);
-  /* añadido: sombra para el emoji */
   text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
 }
 @keyframes bounce {
   0%,100% { transform: translateY(0); }
   50%     { transform: translateY(-8px); }
 }
+
 .title {
   font-size: 1.75rem;
   font-weight: 800;
   color: var(--accent-light);
   text-shadow:
     2px 2px 4px rgba(0,0,0,0.7),
-    0 0 8px var(--accent-mid);
+    0    0    8px var(--accent-mid);
   text-align: center;
 }
+
 .subtitle {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.25rem;
+  gap: 0.5rem;
   font-size: 1rem;
   font-weight: 600;
-  /* añadido: más sombra al texto */
-  text-shadow: 1px 1px 6px rgba(0,0,0,0.7);
-}
-:root {
-  /* Parámetros ajustables */
-  --fire-duration: 3s;
-  --fire-ease: ease-in-out;
-  --fire-color-base: #ff7a00;
-  --fire-color-mid: #ff9c33;
-  --fire-color-tip: #ffd966;
-  --fire-scale-min: 1.2;   /* escala base */
-  --fire-scale-max: 1.15;  /* crecimiento máximo */
-  --fire-rise: 8px;        /* ascenso máximo */
+  color: #FFFFFF;
+  text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.7);
+  line-height: 1.3;
+  text-align: center;
 }
 
 .subtitle .fire {
+  animation: flicker 1.8s infinite var(--ease);
   display: inline-block;
-  transform: scale(var(--fire-scale-min));
-  color: var(--fire-color-base);
-  animation:
-    fire-color    var(--fire-duration) infinite var(--fire-ease),
-    fire-pulse    var(--fire-duration) infinite var(--fire-ease),
-    fire-rise     var(--fire-duration) infinite var(--fire-ease);
-}
-
-@keyframes fire-color {
-  0%, 100% {
-    color: var(--fire-color-base);
-    text-shadow: 0 0 2px var(--fire-color-base);
-  }
-  50% {
-    color: var(--fire-color-mid);
-    text-shadow: 0 0 4px var(--fire-color-mid);
-  }
-  75% {
-    color: var(--fire-color-tip);
-    text-shadow: 0 0 6px var(--fire-color-tip);
-  }
-}
-
-@keyframes fire-pulse {
-  0%, 100% {
-    transform: scale(var(--fire-scale-min));
-  }
-  50% {
-    transform: scale(var(--fire-scale-max));
-  }
-}
-
-@keyframes fire-rise {
-  0%, 100% {
-    transform: translateY(0) scale(var(--fire-scale-min));
-  }
-  50% {
-    transform: translateY(calc(-1 * var(--fire-rise))) scale(var(--fire-scale-max));
-  }
-}
-
+  transform-origin: center bottom;
 }
 @keyframes flicker {
-  0%,20%,22%,63%,65%,100% { opacity: 1; }
-  21%,64%               { opacity: 0.4; }
+  0%, 18%, 20%, 60%, 62%, 100% { opacity: 1; transform: scale(1); }
+  19%, 61%                     { opacity: 0.4; transform: scale(0.9); }
 }
+
 .highlight {
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--accent-light);
-  /* añadido: resalte con sombra */
   text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
   margin-top: 0.5rem;
 }
 
-/* 8. Input & Button */
-.input-group { width: 100%; }
+/*------------------------------------
+6. Input & Button
+------------------------------------*/
+.input-group {
+  width: 100%;
+  margin-bottom: var(--gutter);
+}
+
 input[type="text"] {
   width: 100%;
   padding: 0.75rem;
@@ -228,8 +154,9 @@ input[type="text"] {
   background: var(--input-bg);
   color: var(--white);
   font-size: 1rem;
-  transition: box-shadow var(--medium) var(--ease),
-              transform var(--fast) var(--ease);
+  transition:
+    box-shadow var(--medium) var(--ease),
+    transform var(--fast) var(--ease);
 }
 input[type="text"]:focus {
   outline: none;
@@ -244,6 +171,7 @@ input[type="text"]:focus {
   20%,60% { transform: translateX(-6px); }
   40%,80% { transform: translateX(6px); }
 }
+
 .btn {
   width: 100%;
   padding: 0.75rem;
@@ -257,8 +185,8 @@ input[type="text"]:focus {
   background: linear-gradient(90deg, var(--accent-mid), var(--accent-light));
   background-size: 200% 200%;
   animation: gradient 4s var(--ease) infinite;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
   transition: transform var(--fast) var(--ease);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
 }
 @keyframes gradient {
   0%   { background-position: 0% 50%; }
@@ -275,103 +203,94 @@ input[type="text"]:focus {
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
 }
 
-/* 9. Cubo 3D */
-:root {
-  --cube-size: 200px;
-  --cube-depth: 100px;
-  --cube-duration: 6s;
-  --cube-shadow-blur: 10px;
-  --cube-shadow-color: rgba(0,0,0,0.2);
-}
-
-/* Contenedor de la escena */
-.scene {
+/*------------------------------------
+7. Sequence Fade-Through + Grid Final
+------------------------------------*/
+.sequence-track {
   position: relative;
-  width: var(--cube-size);
-  height: var(--cube-size);
-  margin: auto;
+  width: 100%;
+  height: auto;
 }
-
-/* Sombra dinámica bajo el cubo */
-.shadow {
+.sequence-item {
   position: absolute;
-  width: var(--cube-size);
-  height: calc(var(--cube-size) / 5);
-  background: var(--cube-shadow-color);
-  border-radius: 50%;
-  bottom: -10px;
+  top: 0;
   left: 0;
-  filter: blur(var(--cube-shadow-blur));
-  transform-origin: center;
-  animation: shadowAnim var(--cube-duration) infinite;
-}
-@keyframes shadowAnim {
-  0%,100% { transform: scale(1); opacity: 0.5; }
-  25%     { transform: scale(0.8); opacity: 0.4; }
-  50%     { transform: scale(0.6); opacity: 0.3; }
-  75%     { transform: scale(0.8); opacity: 0.4; }
-}
-
-/* Cubo y rotación automática */
-.container {
   width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
-  animation: rotate3d var(--cube-duration) infinite linear;
+  opacity: 0;
+  transform: scale(0.8);
+  animation: fadeScale var(--fast) var(--ease) forwards;
 }
-@keyframes rotate3d {
-  0%   { transform: rotateX(0deg)   rotateY(0deg); }
-  25%  { transform: rotateX(90deg)  rotateY(90deg); }
-  50%  { transform: rotateX(180deg) rotateY(180deg); }
-  75%  { transform: rotateX(270deg) rotateY(270deg); }
-  100% { transform: rotateX(360deg) rotateY(360deg); }
-}
+.sequence-item:nth-child(1)  { animation-delay: calc(0 * 0.08s); }
+.sequence-item:nth-child(2)  { animation-delay: calc(1 * 0.08s); }
+.sequence-item:nth-child(3)  { animation-delay: calc(2 * 0.08s); }
+.sequence-item:nth-child(4)  { animation-delay: calc(3 * 0.08s); }
+.sequence-item:nth-child(5)  { animation-delay: calc(4 * 0.08s); }
+.sequence-item:nth-child(6)  { animation-delay: calc(5 * 0.08s); }
+.sequence-item:nth-child(7)  { animation-delay: calc(6 * 0.08s); }
+.sequence-item:nth-child(8)  { animation-delay: calc(7 * 0.08s); }
+.sequence-item:nth-child(9)  { animation-delay: calc(8 * 0.08s); }
+.sequence-item:nth-child(10) { animation-delay: calc(9 * 0.08s); }
+.sequence-item:nth-child(11) { animation-delay: calc(10 * 0.08s); }
+.sequence-item:nth-child(12) { animation-delay: calc(11 * 0.08s); }
+.sequence-item:nth-child(13) { animation-delay: calc(12 * 0.08s); }
+.sequence-item:nth-child(14) { animation-delay: calc(13 * 0.08s); }
 
-/* Caras del cubo */
-.face {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  border-radius: 1rem;
-  background: var(--bg-light) center/cover no-repeat;
-  border: 2px solid var(--accent-mid);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-}
-.front  { transform: translateZ(var(--cube-depth)); }
-.back   { transform: translateZ(calc(-1*var(--cube-depth))) rotateY(180deg); }
-.right  { transform: translateX(var(--cube-depth)) rotateY(90deg); }
-.left   { transform: translateX(calc(-1*var(--cube-depth))) rotateY(-90deg); }
-.top    { transform: translateY(calc(-1*var(--cube-depth))) rotateX(90deg); }
-.bottom { transform: translateY(var(--cube-depth)) rotateX(-90deg); }
-
-/* Ajuste móvil */
-@media (max-width: 768px) {
-  :root {
-    --cube-size: 150px;
-    --cube-depth: 75px;
+@keyframes fadeScale {
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
-/* 10. Testimonials */
+#final-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.4s var(--ease) 1.12s, transform 0.4s var(--ease) 1.12s;
+}
+#final-grid .grid-item img {
+  width: 100%;
+  border-radius: calc(var(--radius)/1.3);
+  object-fit: cover;
+}
+
+.carousel-section.show-grid .sequence-track {
+  opacity: 0;
+  transition: opacity 0.4s var(--ease) 1.12s;
+}
+.carousel-section.show-grid #final-grid {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/*------------------------------------
+8. Testimonials header
+------------------------------------*/
 .testimonials-section {
-  background: rgba(72, 17, 0, 0.85);
-  padding: 1.5rem;
+  width: 100%;
+  background: rgba(0,36,72,0.85);
   border-radius: var(--radius);
+  padding: 1.5rem;
   margin-top: var(--gutter);
 }
+
 .testimonials-section h2 {
-  color: var(--accent-light);
   font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--accent-light);
   text-align: center;
   margin-bottom: 1rem;
 }
-/* ajustado para mostrar todos los ítems desde JS */
+
+/* Carrusel vertical de testimonios */
 .testimonials-carousel {
   position: relative;
-  height: auto;
-  overflow: visible;
+  height: 4.5rem;
+  overflow: hidden;
 }
+
 .testimonial-item {
   position: absolute;
   width: 100%;
@@ -380,46 +299,42 @@ input[type="text"]:focus {
   opacity: 0;
   transform: translateY(20px);
   background: rgba(224,247,255,0.05);
-  padding: 1rem;
+  padding: 0.75rem 1rem;
   border-radius: calc(var(--radius)/2);
   box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-  transition: opacity var(--fast) var(--ease),
-              transform var(--fast) var(--ease),
-              top var(--fast) var(--ease);
+  transition:
+    top var(--fast) var(--ease),
+    opacity var(--fast) var(--ease),
+    transform var(--fast) var(--ease);
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 0.25rem;
   color: var(--white);
+  font-size: 0.9rem;
+  line-height: 1.2;
 }
+
 .testimonial-item.active {
   top: 0;
   opacity: 1;
   transform: translateY(0);
 }
-.testimonial-item .meta {
-  font-size: 0.75rem;
-  color: rgba(224,247,255,0.7);
-}
 
-/* 11. Responsive & Accessibility */
-@media(max-width:600px) {
-  .phone-container, .theme-toggle {
-    display: none;
-  }
-  body {
-    overflow: auto;
-  }
-}
-@media(prefers-reduced-motion: reduce) {
+/*------------------------------------
+9. Reduced motion
+------------------------------------*/
+@media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation: none !important;
     transition: none !important;
   }
 }
 
-/* 12. Light theme override */
-
-/* 12. Ocultar el text*/
-.content {
-  display: none !important;
+/*logo*/
+.logo img {
+  width: 80px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }

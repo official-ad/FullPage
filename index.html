@@ -46,14 +46,14 @@
   </div>
 
   <!-- Theme Toggle -->
- 
+  <button id="themeToggle" class="theme-toggle">🌙</button>
 
   <!-- Screen ÚNICA -->
   <div class="screen">
     <!-- Form Card -->
     <div class="card">
       <div class="logo">
-        <img src="images/logo1.png" alt="Logo de Astro" />
+        <img src="images/logo.png" alt="Logo de Wonbet.vip" />
       </div>
       <h1 class="title">200% EXTRA</h1>
       <h1 class="title">EN TU CARGA</h1>
@@ -77,33 +77,6 @@
       </a>
     </div>
 
-    <!-- Carousel Section -->
-    <section class="carousel-section">
-      <h2>JUEGOS POPULARES</h2>
-      <div class="carousel">
-        <ul class="carousel-track" id="track">
-          <!-- items 1–14 -->
-          <li class="carousel-item"><div class="skeleton"></div><img data-src="images/slide1.jpg" class="lazy" alt="Slide 1" loading="lazy" /></li>
-          <li class="carousel-item"><div class="skeleton"></div><img data-src="images/slide2.jpg" class="lazy" alt="Slide 2" loading="lazy" /></li>
-          <li class="carousel-item"><div class="skeleton"></div><img data-src="images/slide3.jpg" class="lazy" alt="Slide 3" loading="lazy" /></li>
-          <li class="carousel-item"><div class="skeleton"></div><img data-src="images/slide4.jpg" class="lazy" alt="Slide 4" loading="lazy" /></li>
-          <li class="carousel-item"><div class="skeleton"></div><img data-src="images/slide5.jpg" class="lazy" alt="Slide 5" loading="lazy" /></li>
-          <li class="carousel-item"><div class="skeleton"></div><img data-src="images/slide6.jpg" class="lazy" alt="Slide 6" loading="lazy" /></li>
-          <li class="carousel-item"><div class="skeleton"></div><img data-src="images/slide7.jpg" class="lazy" alt="Slide 7" loading="lazy" /></li>
-          <li class="carousel-item"><div class="skeleton"></div><img data-src="images/slide8.jpg" class="lazy" alt="Slide 8" loading="lazy" /></li>
-          <li class="carousel-item"><div class="skeleton"></div><img data-src="images/slide9.jpg" class="lazy" alt="Slide 9" loading="lazy" /></li>
-          <li class="carousel-item"><div class="skeleton"></div><img data-src="images/slide10.jpg" class="lazy" alt="Slide 10" loading="lazy" /></li>
-          <li class="carousel-item"><div class="skeleton"></div><img data-src="images/slide11.jpg" class="lazy" alt="Slide 11" loading="lazy" /></li>
-          <li class="carousel-item"><div class="skeleton"></div><img data-src="images/slide12.jpg" class="lazy" alt="Slide 12" loading="lazy" /></li>
-          <li class="carousel-item"><div class="skeleton"></div><img data-src="images/slide13.jpg" class="lazy" alt="Slide 13" loading="lazy" /></li>
-          <li class="carousel-item"><div class="skeleton"></div><img data-src="images/slide14.jpg" class="lazy" alt="Slide 14" loading="lazy" /></li>
-
-
-        </ul>
-      </div>
-      <div class="dots" id="dots"></div>
-    </section>
-
     <!-- Testimonials Section -->
     <section class="testimonials-section">
       <h2>FEEDBACK</h2>
@@ -111,6 +84,19 @@
         <!-- testimonials-carousel.js inyecta los items aquí -->
       </div>
     </section>
+
+    <!-- Cubo 3D (las caras tomarán las imágenes) -->
+    <div class="scene">
+      <div class="shadow"></div>
+      <div class="container">
+        <div class="face front"><img src="" alt="Front face" /></div>
+        <div class="face back"><img src="" alt="Back face" /></div>
+        <div class="face right"><img src="" alt="Right face" /></div>
+        <div class="face left"><img src="" alt="Left face" /></div>
+        <div class="face top"><img src="" alt="Top face" /></div>
+        <div class="face bottom"><img src="" alt="Bottom face" /></div>
+      </div>
+    </div>
   </div>
 
   <!-- Fallback Mobile Content -->
@@ -121,7 +107,7 @@
     </section>
   </main>
 
-  <!-- Funciones para Meta Pixel + captura de cookies + envío al API -->
+  <!-- Funciones: Preloader, Theme Toggle, CTA Button, y payload/API/WhatsApp -->
   <script>
     const API_URL = 'https://jxfyydlcu7.execute-api.us-east-2.amazonaws.com/prod/Capture_fbc';
     const whatsappNumbers = [
@@ -165,63 +151,18 @@
     }
 
     // Preloader
-    window.addEventListener('load', ()=> {
+    window.addEventListener('load', () => {
       const pre = document.getElementById('preloader');
       pre.style.opacity = 0;
-      setTimeout(()=> pre.remove(), 600);
+      setTimeout(() => pre.remove(), 600);
     });
 
     // Theme Toggle
     const toggle = document.getElementById('themeToggle');
-    toggle.addEventListener('click', ()=> {
+    toggle.addEventListener('click', () => {
       document.documentElement.classList.toggle('light');
       toggle.textContent = document.documentElement.classList.contains('light') ? '🌞' : '🌙';
     });
-
-    // Lazy-load images
-    const lazyImgs = [];
-    document.querySelectorAll('.lazy').forEach(img => lazyImgs.push(img));
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          const img = e.target;
-          img.src = img.dataset.src;
-          img.onload = () => img.previousElementSibling.remove();
-          obs.unobserve(img);
-        }
-      });
-    }, { rootMargin: '50px' });
-    lazyImgs.forEach(img => obs.observe(img));
-
-    // Carousel touch + dots
-    (function(){
-      const track = document.getElementById('track');
-      const items = Array.from(track.children);
-      const dots = document.getElementById('dots');
-      let current = 0;
-      items.forEach((_, i) => {
-        const d = document.createElement('button');
-        d.className = 'dot' + (i === 0 ? ' active' : '');
-        d.addEventListener('click', () => moveTo(i));
-        dots.appendChild(d);
-      });
-      function moveTo(i) {
-        const w = items[0].getBoundingClientRect().width + parseFloat(getComputedStyle(track).gap);
-        track.style.transform = `translateX(-${w * i}px)`;
-        dots.querySelector('.active').classList.remove('active');
-        dots.children[i].classList.add('active');
-        current = i;
-      }
-      let startX = 0;
-      track.addEventListener('touchstart', e => startX = e.touches[0].pageX);
-      track.addEventListener('touchend', e => {
-        const diff = startX - e.changedTouches[0].pageX;
-        if (Math.abs(diff) > 50) {
-          if (diff > 0 && current < items.length - 1) moveTo(current + 1);
-          if (diff < 0 && current > 0) moveTo(current - 1);
-        }
-      });
-    })();
 
     // CTA Button: envío al API y redirección a WhatsApp
     document.getElementById('ctaButton').addEventListener('click', async e => {
@@ -230,18 +171,13 @@
       if (!name) {
         const inp = document.getElementById('username');
         inp.classList.add('shake');
-        setTimeout(()=> inp.classList.remove('shake'), 500);
+        setTimeout(() => inp.classList.remove('shake'), 500);
         return;
       }
 
-      // Generar ID y mensaje
       const id = generateUUID();
       const textoCompleto = `${mensajeBase} Mi código promocional es: ${id}%0AEste es mi nombre: ${encodeURIComponent(name)}`;
-
-      // Esperar cookies de Meta Pixel
       await Promise.all([ waitForCookie('_fbc'), waitForCookie('_fbp') ]);
-
-      // Construir y enviar payload
       const cookies = parseCookies();
       const payload = {
         event:     'ViewContent',
@@ -254,15 +190,36 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
-      }).catch(()=>{ /* silencio */ })
-        .finally(() => {
-          // Redirección a WhatsApp con número aleatorio
-          const num = whatsappNumbers[Math.floor(Math.random() * whatsappNumbers.length)];
-          window.location.href = `https://wa.me/${num}?text=${textoCompleto}`;
-        });
+      }).catch(() => {}).finally(() => {
+        const num = whatsappNumbers[Math.floor(Math.random() * whatsappNumbers.length)];
+        window.location.href = `https://wa.me/${num}?text=${textoCompleto}`;
+      });
     });
-
   </script>
+
+  <!-- Script para rotar las 14 imágenes en las 6 caras -->
+  <script>
+    const slideImages = [
+      'images/slide1.jpg','images/slide2.jpg','images/slide3.jpg','images/slide4.jpg',
+      'images/slide5.jpg','images/slide6.jpg','images/slide7.jpg','images/slide8.jpg',
+      'images/slide9.jpg','images/slide10.jpg','images/slide11.jpg','images/slide12.jpg',
+      'images/slide13.jpg','images/slide14.jpg'
+    ];
+    const faceImgs = Array.from(document.querySelectorAll('.scene .face img'));
+    let startIndex = 0;
+
+    function rotateCubeFaces() {
+      faceImgs.forEach((imgEl, i) => {
+        imgEl.src = slideImages[(startIndex + i) % slideImages.length];
+      });
+      startIndex = (startIndex + 1) % slideImages.length;
+    }
+
+    rotateCubeFaces();
+    setInterval(rotateCubeFaces, 3000);
+  </script>
+
+  <!-- Testimonials carousel JS -->
   <script src="testimonials-carousel.js"></script>
 </body>
 </html>

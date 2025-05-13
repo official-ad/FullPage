@@ -206,60 +206,111 @@ input[type="text"]:focus {
 /*------------------------------------
 7. Sequence Fade-Through + Grid Final
 ------------------------------------*/
+/* --------------------------------------------------
+   Sequence Track & Items
+-------------------------------------------------- */
 .sequence-track {
   position: relative;
   width: 100%;
   height: auto;
+  overflow: hidden;
 }
+
 .sequence-item {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   opacity: 0;
-  transform: scale(0.8);
-  animation: fadeScale var(--fast) var(--ease) forwards;
+  transform: translateY(var(--start-offset, 20px)) scale(0.8);
+  will-change: transform, opacity;
+  border-radius: var(--radius, 8px);
+  /* Entry and continuous animations */
+  animation:
+    slideFadeIn var(--fast, 0.5s) var(--ease, ease-out) forwards var(--delay-step, 0.08s) calc(var(--i, 0) * var(--delay-step, 0.08s)),
+    float var(--float-duration, 3s) var(--float-ease, ease-in-out) infinite both calc(var(--i, 0) * var(--delay-step, 0.08s));
 }
-.sequence-item:nth-child(1)  { animation-delay: calc(0 * 0.08s); }
-.sequence-item:nth-child(2)  { animation-delay: calc(1 * 0.08s); }
-.sequence-item:nth-child(3)  { animation-delay: calc(2 * 0.08s); }
-.sequence-item:nth-child(4)  { animation-delay: calc(3 * 0.08s); }
-.sequence-item:nth-child(5)  { animation-delay: calc(4 * 0.08s); }
-.sequence-item:nth-child(6)  { animation-delay: calc(5 * 0.08s); }
-.sequence-item:nth-child(7)  { animation-delay: calc(6 * 0.08s); }
-.sequence-item:nth-child(8)  { animation-delay: calc(7 * 0.08s); }
-.sequence-item:nth-child(9)  { animation-delay: calc(8 * 0.08s); }
-.sequence-item:nth-child(10) { animation-delay: calc(9 * 0.08s); }
-.sequence-item:nth-child(11) { animation-delay: calc(10 * 0.08s); }
-.sequence-item:nth-child(12) { animation-delay: calc(11 * 0.08s); }
-.sequence-item:nth-child(13) { animation-delay: calc(12 * 0.08s); }
-.sequence-item:nth-child(14) { animation-delay: calc(13 * 0.08s); }
 
-@keyframes fadeScale {
+/* Index for delay calculation */
+.sequence-item:nth-child(1)  { --i: 0; }
+.sequence-item:nth-child(2)  { --i: 1; }
+.sequence-item:nth-child(3)  { --i: 2; }
+.sequence-item:nth-child(4)  { --i: 3; }
+.sequence-item:nth-child(5)  { --i: 4; }
+.sequence-item:nth-child(6)  { --i: 5; }
+.sequence-item:nth-child(7)  { --i: 6; }
+.sequence-item:nth-child(8)  { --i: 7; }
+.sequence-item:nth-child(9)  { --i: 8; }
+.sequence-item:nth-child(10) { --i: 9; }
+.sequence-item:nth-child(11) { --i: 10; }
+.sequence-item:nth-child(12) { --i: 11; }
+.sequence-item:nth-child(13) { --i: 12; }
+.sequence-item:nth-child(14) { --i: 13; }
+
+/* --------------------------------------------------
+   Animations
+-------------------------------------------------- */
+@keyframes slideFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(var(--start-offset, 20px)) scale(0.8);
+  }
   to {
     opacity: 1;
-    transform: scale(1);
+    transform: translateY(0) scale(1);
   }
 }
 
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(calc(var(--float-distance, 5px) * -1)) scale(1.02);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sequence-item {
+    animation: none;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* --------------------------------------------------
+   Final Grid Layout
+-------------------------------------------------- */
 #final-grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 0.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--gap, 0.5rem);
   opacity: 0;
   transform: scale(0.9);
-  transition: opacity 0.4s var(--ease) 1.12s, transform 0.4s var(--ease) 1.12s;
+  transform-origin: center;
+  transition:
+    opacity var(--grid-duration, 0.4s) var(--ease, ease-out) var(--show-delay, 1.12s),
+    transform var(--grid-duration, 0.4s) var(--ease, ease-out) var(--show-delay, 1.12s);
 }
-#final-grid .grid-item img {
+
+#final-grid .grid-item img,
+.sequence-item img {
+  display: block;
   width: 100%;
-  border-radius: calc(var(--radius)/1.3);
+  height: auto;
+  border-radius: inherit;
   object-fit: cover;
+}
+
+/* Show/hide transitions via modifier */
+.carousel-section {
+  position: relative;
 }
 
 .carousel-section.show-grid .sequence-track {
   opacity: 0;
-  transition: opacity 0.4s var(--ease) 1.12s;
+  transition: opacity var(--grid-duration, 0.4s) var(--ease, ease-out) var(--show-delay, 1.12s);
 }
+
 .carousel-section.show-grid #final-grid {
   opacity: 1;
   transform: scale(1);
